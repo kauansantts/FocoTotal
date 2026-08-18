@@ -23,7 +23,7 @@ namespace FocoTotal.Models
         {
             Console.Write("Titulo: ");
             var titulotarefa = Console.ReadLine();
-
+            
 
         }
         
