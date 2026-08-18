@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FocoTotal.Enums
 {
-    public enum EnumCategoria
+    public enum EnumPrioridade
     {
         Urgente =1,
         Media =2,
