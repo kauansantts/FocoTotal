@@ -52,7 +52,7 @@ namespace FocoTotal.Models
             Tarefa tarefa = new Tarefa(titulotarefa, descricaotarefa, prioridadetarefa, datatarefa, idtarefa);
             tarefas.Add(tarefa);
             Console.WriteLine($"O ID dessa tarefa: {idtarefa}");
-            Console.WriteLine("Tarefa adicionada com sucesso!");
+            Menu.MensagemPersonalizada("Tarefa adicionada com sucesso!");
         }
 
         public void DeleteTarefa()
