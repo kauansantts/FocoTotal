@@ -25,7 +25,6 @@ namespace FocoTotal.Services
 
         public static void Linha(string mensagem)
         {
-            //Console.WriteLine($"==================={mensagem}===================");
             int tamanhoMensagem = mensagem.Length;
             int lado = (tamanhoMensagem + 20) / 2;
 
@@ -50,6 +49,12 @@ namespace FocoTotal.Services
                 }else if (entrada == 1)
                 {
                     usuario.AddTarefa();
+                }else if (entrada == 3)
+                {
+                    usuario.ExibirTarefas();
+                }else if (entrada == 2)
+                {
+                    usuario.DeleteTarefa();
                 }
             }
         }
