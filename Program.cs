@@ -6,6 +6,9 @@ using FocoTotal.Models;
 using FocoTotal.Services;
 using System.Threading;
 
+
+//faltando apenas add persistencia de dados
+
 namespace FocoTotal
 {
     class Program
@@ -50,8 +53,3 @@ namespace FocoTotal
 
 }
 
-
-//Console.BackgroundColor = ConsoleColor.Yellow;
-//Console.ForegroundColor = ConsoleColor.Black;
-//Console.WriteLine(nomeDoExercicio);
-//Console.ResetColor();

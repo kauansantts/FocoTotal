@@ -29,7 +29,7 @@ namespace FocoTotal.Services
             int lado = (tamanhoMensagem + 20) / 2;
 
             string resultado = $"{new string('=', lado)} {mensagem} {new string('=', lado)}";
-            Console.WriteLine(resultado);
+            Console.Write(resultado);
 
         }
 
@@ -55,8 +55,20 @@ namespace FocoTotal.Services
                 }else if (entrada == 2)
                 {
                     usuario.DeleteTarefa();
+                }else if (entrada == 4)
+                {
+                    usuario.TarefasPersonalizadas();
                 }
             }
+        }
+
+        public static void MensagemPersonalizada(string texto)
+        {
+            Console.BackgroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write(texto);
+            Console.ResetColor();
+            Console.WriteLine();
         }
     }
 

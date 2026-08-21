@@ -67,7 +67,7 @@ namespace FocoTotal.Models
             }
             tarefas.Remove(tarefaachada);
             Thread.Sleep(0800);
-            Console.WriteLine($"Tarefa id[{identrada}] excluida com sucesso!");
+            Menu.MensagemPersonalizada($"Tarefa id[{identrada}] excluida com sucesso!");
         }
         
         
@@ -90,7 +90,95 @@ namespace FocoTotal.Models
 
         public void TarefasPersonalizadas()
         {
-            //metodos LINQs tipo tarefas mais urgentes e tals
+            Menu.MenuOpc("tarefas urgentes", "Tarefas medias", "Tarefas normais", "Tarefas baixas", "Exibir tarefa por ID");
+            Console.Write("Opção: ");
+            int.TryParse(Console.ReadLine(), out int entrada);
+         
+            switch (entrada)
+            {
+                case 1:
+                {
+                        var resultado = tarefas.Where(tarefa => tarefa.TipoPrioridade == EnumPrioridade.Urgente);
+
+                        Menu.Linha("Tarefas urgentes");
+                        foreach (var tarefa in resultado)
+                        {
+                            Console.BackgroundColor = ConsoleColor.Red;
+                            Console.ForegroundColor = ConsoleColor.Black;
+                            Menu.Linha($"{tarefa.TituloTarefa}");
+                            Console.Write($"Titulo: {tarefa.TituloTarefa}");
+                            Console.Write($"Descrição: {tarefa.DescricaoTarefa}");
+                            Console.Write($"Prioridade: {tarefa.TipoPrioridade}");
+                            Console.Write($"Data: {tarefa.DataTarefa}");
+                            Menu.Linha("------");
+                            Console.ResetColor();
+                            Console.WriteLine();
+                        }
+                        break;
+                }
+                case 2:
+                {
+                        var resultado = tarefas.Where(tarefa => tarefa.TipoPrioridade == EnumPrioridade.Media);
+
+                        Menu.Linha("Tarefas medianas");
+                        foreach (var tarefa in resultado)
+                        {
+                            Menu.Linha($"{tarefa.TituloTarefa}");
+                            Console.WriteLine($"Titulo: {tarefa.TituloTarefa}");
+                            Console.WriteLine($"Descrição: {tarefa.DescricaoTarefa}");
+                            Console.WriteLine($"Prioridade: {tarefa.TipoPrioridade}");
+                            Console.WriteLine($"Data: {tarefa.DataTarefa}");
+                            Menu.Linha("------");
+                        }
+                        break;
+                }
+                case 3:
+                {
+                        var resultado = tarefas.Where(tarefa => tarefa.TipoPrioridade == EnumPrioridade.Normal);
+
+                        Menu.Linha("Tarefas normais");
+                        foreach (var tarefa in resultado)
+                        {
+                            Menu.Linha($"{tarefa.TituloTarefa}");
+                            Console.WriteLine($"Titulo: {tarefa.TituloTarefa}");
+                            Console.WriteLine($"Descrição: {tarefa.DescricaoTarefa}");
+                            Console.WriteLine($"Prioridade: {tarefa.TipoPrioridade}");
+                            Console.WriteLine($"Data: {tarefa.DataTarefa}");
+                            Menu.Linha("------");
+                        }
+                        break;
+                }
+                case 4:
+                {
+                        var resultado = tarefas.Where(tarefa => tarefa.TipoPrioridade == EnumPrioridade.Baixa);
+
+                        Menu.Linha("Tarefas baixas");
+                        foreach (var tarefa in resultado)
+                        {
+                            Menu.Linha($"{tarefa.TituloTarefa}");
+                            Console.WriteLine($"Titulo: {tarefa.TituloTarefa}");
+                            Console.WriteLine($"Descrição: {tarefa.DescricaoTarefa}");
+                            Console.WriteLine($"Prioridade: {tarefa.TipoPrioridade}");
+                            Console.WriteLine($"Data: {tarefa.DataTarefa}");
+                            Menu.Linha("------");
+                        }
+                        break;
+                }
+                case 5:
+                {
+                        Console.Write("ID da tarefa: ");
+                        int.TryParse(Console.ReadLine(), out int identrada);
+                        var tarefaachada = tarefas.Find(tarefa => tarefa.IdTarefa == identrada);
+
+                        Menu.Linha($"Tarefa {tarefaachada}");
+                        Console.WriteLine($"Titulo: {tarefaachada.TituloTarefa}");
+                        Console.WriteLine($"Descrição: {tarefaachada.DescricaoTarefa}");
+                        Console.WriteLine($"Prioridade: {tarefaachada.TipoPrioridade}");
+                        Console.WriteLine($"Data: {tarefaachada.DataTarefa}");
+                        Menu.Linha("------");
+                        break;
+                }
+            }
         }
     }
 }

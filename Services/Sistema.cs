@@ -52,8 +52,8 @@ namespace FocoTotal.Services
 
             var usuario = new Usuario(nomeUsuario, senhaUsuario);
             Usuarios.Add(usuario);
-            Thread.Sleep(1000);
-            Console.WriteLine($"Usuario {usuario.NomeUsuario} cadastrado com sucesso!");
+            Thread.Sleep(0600);
+            Menu.MensagemPersonalizada($"Usuario {usuario.NomeUsuario} cadastrado com sucesso!");
         }
     }
 }
