@@ -13,7 +13,10 @@ namespace FocoTotal.Services
         List<Usuario> Usuarios = new List<Usuario>();
 
 
-        public Sistema() { } //adicionar o carregar contas do disco aqui!
+        public Sistema()
+        {
+            UploadContasDisc();
+        } 
 
         public Usuario Login(string username, string password)
         {
@@ -68,7 +71,33 @@ namespace FocoTotal.Services
             Thread.Sleep(0600);
             Menu.MensagemPersonalizada($"Usuario {usuario.NomeUsuario} cadastrado com sucesso!");
         }
+
+        public void UploadContasDisc()
+        {
+            var diretorio = @"C:\Users\kauan\Documents\DEV\C#\FocoTotal\Contas";
+            var arquivos = Directory.GetFiles(diretorio);
+            foreach (var arquivo in arquivos)
+            {
+                string[] linhas = File.ReadAllLines(arquivo);
+                var usuario = new Usuario(linhas[0], linhas[1]);
+
+                if(linhas.Length > 2)
+                {
+                    for (int i = 2; i < linhas.Length; i++)
+                    {
+                        var partes = linhas[i].Split(';');
+
+                        var parte2 = Enum.Parse<EnumPrioridade>(partes[2]);
+                        var parte3 = DateTime.Parse(partes[3]);
+                        int.TryParse(Console.ReadLine(), out int parte4);
+                        var tarefa = new Tarefa(partes[0], partes[1], parte2, parte3, parte4);
+                        usuario.tarefas.Add(tarefa);
+                    }
+                }
+
+                Usuarios.Add(usuario);
+
+            }
+        }
     }
 }
-
-//add metodo de carregar contas do disco

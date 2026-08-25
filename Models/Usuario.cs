@@ -67,23 +67,12 @@ namespace FocoTotal.Models
             Menu.MensagemPersonalizada("Tarefa adicionada com sucesso!");
         }
 
-        public void DeleteTarefa()
+        public void DeleteTarefa(int identrada)
         {
-            Console.Write("Qual id da tarefa que quer remover: ");
-            int.TryParse(Console.ReadLine(), out int identrada);
-            var tarefaachada = tarefas.Find(tarefa => tarefa.IdTarefa == identrada);
-            if (tarefaachada == null)
-            {
-                Console.WriteLine("Tarefa inexistente");
-                return;
-            }
-            tarefas.Remove(tarefaachada);
+            var resultado = GetTarefa(identrada);
+            tarefas.Remove(resultado);
 
-
-
-
-
-            Thread.Sleep(0800);
+            Thread.Sleep(0500);
             Menu.MensagemPersonalizada($"Tarefa id[{identrada}] excluida com sucesso!");
         }
         
@@ -104,6 +93,19 @@ namespace FocoTotal.Models
 
             Menu.Linha("------");
         }
+
+
+        public Tarefa GetTarefa(int id)
+        {
+
+            var tarefaachada = tarefas.Find(tarefa => tarefa.IdTarefa == id);
+            if (tarefaachada == null)
+            {
+                throw new TarefaInexistenteException("Tarefa inexistente!");
+            }
+            return tarefaachada;
+        }
+
 
         public void TarefasPersonalizadas()
         {
@@ -196,6 +198,23 @@ namespace FocoTotal.Models
                         break;
                 }
             }
+        }
+
+        public void SalvarDadosArquivo()
+        {
+            var path = @$"C:\Users\kauan\Documents\DEV\C#\KBank\Contas\conta_{NomeUsuario}.txt";
+
+            List<string> dados = new List<string>();
+            dados.Add(NomeUsuario.ToString());
+            dados.Add(SenhaUsuario);
+
+            foreach (var tarefa in tarefas)
+            {
+                string task = $"{tarefa.TituloTarefa};{tarefa.DescricaoTarefa};{tarefa.TipoPrioridade};{tarefa.DataTarefa};{tarefa.IdTarefa}";
+                dados.Add(task);
+            }
+
+            File.WriteAllLines(path, dados);
         }
     }
 }
