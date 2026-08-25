@@ -16,7 +16,7 @@ namespace FocoTotal
         
         public static void Main(string[] args)
         {
-            Sistema sistema = new Sistema();
+            Sistema sistema = new Sistema();//add a instancia de carregamento do disco
             while (true)
             {
                 Menu.MenuOpc("Login", "Cadastrar conta", "Encerrar");

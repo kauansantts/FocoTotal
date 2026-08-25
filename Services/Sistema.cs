@@ -12,6 +12,9 @@ namespace FocoTotal.Services
     {
         List<Usuario> Usuarios = new List<Usuario>();
 
+
+        public Sistema() { } //adicionar o carregar contas do disco aqui!
+
         public Usuario Login(string username, string password)
         {
             var usuario = BuscarUser(username, password);
@@ -52,10 +55,20 @@ namespace FocoTotal.Services
 
             var usuario = new Usuario(nomeUsuario, senhaUsuario);
             Usuarios.Add(usuario);
+
+
+            var path = $@"C:\Users\kauan\Documents\DEV\C#\FocoTotal\Contas\conta_{nomeUsuario}.txt";
+            string[] dados = { nomeUsuario, senhaUsuario };
+            if (!File.Exists(path))
+            {
+                File.WriteAllLines(path, dados);
+            }
+
+
             Thread.Sleep(0600);
             Menu.MensagemPersonalizada($"Usuario {usuario.NomeUsuario} cadastrado com sucesso!");
         }
     }
 }
 
-//depois add persistencia
+//add metodo de carregar contas do disco

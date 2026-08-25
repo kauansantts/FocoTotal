@@ -52,6 +52,18 @@ namespace FocoTotal.Models
             Tarefa tarefa = new Tarefa(titulotarefa, descricaotarefa, prioridadetarefa, datatarefa, idtarefa);
             tarefas.Add(tarefa);
             Console.WriteLine($"O ID dessa tarefa: {idtarefa}");
+
+
+
+            string dadosInteiros = $"{titulotarefa};{descricaotarefa};{prioridadetarefa.ToString()};{datatarefa.ToString()};{idtarefa.ToString()}";
+            string[] dados = {dadosInteiros};
+            var path = $@"C:\Users\kauan\Documents\DEV\C#\FocoTotal\Contas\conta_{NomeUsuario}.txt";
+            if (File.Exists(path))
+            {
+                File.AppendAllLines(path, dados);
+            }
+
+
             Menu.MensagemPersonalizada("Tarefa adicionada com sucesso!");
         }
 
@@ -66,6 +78,11 @@ namespace FocoTotal.Models
                 return;
             }
             tarefas.Remove(tarefaachada);
+
+
+
+
+
             Thread.Sleep(0800);
             Menu.MensagemPersonalizada($"Tarefa id[{identrada}] excluida com sucesso!");
         }
