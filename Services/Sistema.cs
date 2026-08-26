@@ -89,7 +89,7 @@ namespace FocoTotal.Services
 
                         var parte2 = Enum.Parse<EnumPrioridade>(partes[2]);
                         var parte3 = DateTime.Parse(partes[3]);
-                        int.TryParse(Console.ReadLine(), out int parte4);
+                        int.TryParse(partes[4], out int parte4);
                         var tarefa = new Tarefa(partes[0], partes[1], parte2, parte3, parte4);
                         usuario.tarefas.Add(tarefa);
                     }

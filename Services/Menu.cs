@@ -11,7 +11,6 @@ namespace FocoTotal.Services
         public static void MenuOpc(params string[] opc)
         {
             Linha("Foco Total");
-            Thread.Sleep(0200);
             var i = 1;
             foreach (var item in opc)
             {
@@ -37,7 +36,7 @@ namespace FocoTotal.Services
         {
             while (true)
             {
-                Menu.MenuOpc("Adicionar tarefa", "Remover tarefa", "Exibir tarefas", "Exibir tarefas personalizadas", "Encerrar");
+                Menu.MenuOpc("Adicionar tarefa", "Remover tarefa", "Exibir tarefas", "Exibir tarefas personalizadas", "Sair do sistema");
                 Console.Write("Opção: ");
                 int.TryParse(Console.ReadLine(), out int entrada);
 

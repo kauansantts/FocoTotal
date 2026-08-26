@@ -52,18 +52,8 @@ namespace FocoTotal.Models
             Tarefa tarefa = new Tarefa(titulotarefa, descricaotarefa, prioridadetarefa, datatarefa, idtarefa);
             tarefas.Add(tarefa);
             Console.WriteLine($"O ID dessa tarefa: {idtarefa}");
-
-
-
-            string dadosInteiros = $"{titulotarefa};{descricaotarefa};{prioridadetarefa.ToString()};{datatarefa.ToString()};{idtarefa.ToString()}";
-            string[] dados = {dadosInteiros};
-            var path = $@"C:\Users\kauan\Documents\DEV\C#\FocoTotal\Contas\conta_{NomeUsuario}.txt";
-            if (File.Exists(path))
-            {
-                File.AppendAllLines(path, dados);
-            }
-
-
+            SalvarDadosArquivo();
+          
             Menu.MensagemPersonalizada("Tarefa adicionada com sucesso!");
         }
 
@@ -71,6 +61,7 @@ namespace FocoTotal.Models
         {
             var resultado = GetTarefa(identrada);
             tarefas.Remove(resultado);
+            SalvarDadosArquivo();
 
             Thread.Sleep(0500);
             Menu.MensagemPersonalizada($"Tarefa id[{identrada}] excluida com sucesso!");
@@ -83,7 +74,7 @@ namespace FocoTotal.Models
 
             foreach (var tarefa in tarefas)
             {
-                Menu.Linha($"{tarefa.TituloTarefa}");
+                Console.WriteLine($"ID: [{tarefa.IdTarefa}]");
                 Console.WriteLine($"Titulo: {tarefa.TituloTarefa}");
                 Console.WriteLine($"Descrição: {tarefa.DescricaoTarefa}");
                 Console.WriteLine($"Prioridade: {tarefa.TipoPrioridade}");
@@ -189,7 +180,13 @@ namespace FocoTotal.Models
                         int.TryParse(Console.ReadLine(), out int identrada);
                         var tarefaachada = tarefas.Find(tarefa => tarefa.IdTarefa == identrada);
 
-                        Menu.Linha($"Tarefa {tarefaachada}");
+                        if (tarefaachada == null)
+                        {
+                            Console.WriteLine("Tarefa inexistente!");
+                            break;
+                        }
+
+                        Menu.Linha($"Tarefa {tarefaachada.TituloTarefa}");
                         Console.WriteLine($"Titulo: {tarefaachada.TituloTarefa}");
                         Console.WriteLine($"Descrição: {tarefaachada.DescricaoTarefa}");
                         Console.WriteLine($"Prioridade: {tarefaachada.TipoPrioridade}");
@@ -202,15 +199,15 @@ namespace FocoTotal.Models
 
         public void SalvarDadosArquivo()
         {
-            var path = @$"C:\Users\kauan\Documents\DEV\C#\KBank\Contas\conta_{NomeUsuario}.txt";
+            var path = @$"C:\Users\kauan\Documents\DEV\C#\FocoTotal\Contas\conta_{NomeUsuario}.txt";
 
             List<string> dados = new List<string>();
-            dados.Add(NomeUsuario.ToString());
+            dados.Add(NomeUsuario);
             dados.Add(SenhaUsuario);
 
             foreach (var tarefa in tarefas)
             {
-                string task = $"{tarefa.TituloTarefa};{tarefa.DescricaoTarefa};{tarefa.TipoPrioridade};{tarefa.DataTarefa};{tarefa.IdTarefa}";
+                string task = $"{tarefa.TituloTarefa};{tarefa.DescricaoTarefa};{tarefa.TipoPrioridade.ToString()};{tarefa.DataTarefa.ToString()};{tarefa.IdTarefa.ToString()}";
                 dados.Add(task);
             }
 
