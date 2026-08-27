@@ -31,7 +31,7 @@ namespace FocoTotal
                         var nome = Console.ReadLine();
                         Console.Write("Senha: ");
                         var senha = Console.ReadLine();
-                        Thread.Sleep(0500);
+                        Thread.Sleep(0100);
                         var logou = sistema.Login(nome, senha);
                         Menu.MenuLogado(logou);
                     }catch(Exception ex)
@@ -44,7 +44,7 @@ namespace FocoTotal
                 }else if (entrada == 3)
                 {
                     Menu.Linha("Encerrando o sistema");
-                    Thread.Sleep(1000);
+                    Thread.Sleep(0600);
                     break;
                 }
             }

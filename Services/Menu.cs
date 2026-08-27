@@ -32,6 +32,7 @@ namespace FocoTotal.Services
 
         }
 
+
         public static void MenuLogado(Usuario usuario)
         {
             while (true)
@@ -43,7 +44,7 @@ namespace FocoTotal.Services
                 if(entrada == 5)
                 { 
                     Menu.Linha("Saindo do sistema");
-                    Thread.Sleep(1000);
+                    Thread.Sleep(0600);
                     break;
                 }else if (entrada == 1)
                 {
@@ -53,26 +54,61 @@ namespace FocoTotal.Services
                     usuario.ExibirTarefas();
                 }else if (entrada == 2)
                 {
-                    Console.Write("Qual id da tarefa que quer remover: ");
-                    int.TryParse(Console.ReadLine(), out int identrada);
-                    try
+                    Menu.MenuOpc("Remover tarefa por ID", "Remover varias tarefas por ID", "Remover todas tarefas");
+                    Console.Write("Opção: ");
+                    int.TryParse(Console.ReadLine(), out int resposta);
+
+                    if (resposta == 1)
                     {
-                    usuario.DeleteTarefa(identrada);
-                    }catch(Exception ex)
+                        Menu.Linha("------");
+                        Console.Write("Qual ID da tarefa que quer remover: ");
+                        int.TryParse(Console.ReadLine(), out int identrada);
+                        try
+                        {
+                            usuario.DeleteTarefaId(identrada);
+                        }
+                        catch (Exception ex)
+                        {
+                            Menu.MensagemPersonalizadaRed(ex.Message);
+                        }
+                    }else if(resposta == 2)
                     {
-                        Console.WriteLine(ex.Message);
+                        try
+                        {
+                            int[] ids;
+                            Console.Write("Quais IDs das tarefas que quer remover: ");
+                            int.TryParse(Console.ReadLine(), out int idsentrada);
+                        }catch(Exception ex)
+                        {
+                            Menu.MensagemPersonalizadaRed(ex.Message);
+                        }
                     }
-                }else if (entrada == 4)
+
+                }
+                else if (entrada == 4)
                 {
                     usuario.TarefasPersonalizadas();
                 }
             }
         }
 
-        public static void MensagemPersonalizada(string texto)
+        public static void MensagemPersonalizadaGreen(string texto)
         {
-            Console.BackgroundColor = ConsoleColor.Green;
-            Console.ForegroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(texto);
+            Console.ResetColor();
+            Console.WriteLine();
+        }
+        public static void MensagemPersonalizadaBlue(string texto)
+        {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write(texto);
+            Console.ResetColor();
+            Console.WriteLine();
+        }
+        public static void MensagemPersonalizadaRed(string texto)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.Write(texto);
             Console.ResetColor();
             Console.WriteLine();

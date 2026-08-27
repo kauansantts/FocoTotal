@@ -21,8 +21,8 @@ namespace FocoTotal.Services
         public Usuario Login(string username, string password)
         {
             var usuario = BuscarUser(username, password);
-            Console.WriteLine($"Bem vindo {usuario.NomeUsuario}");
-            Menu.Linha("------");
+            Thread.Sleep(0200);
+            Menu.MensagemPersonalizadaGreen($"Bem vindo {usuario.NomeUsuario}");
             return usuario;
         }
 
@@ -32,7 +32,6 @@ namespace FocoTotal.Services
             {
                 if(username == usuario.NomeUsuario && password == usuario.SenhaUsuario)
                 {
-                    Console.WriteLine($"Conta encontrada {usuario.NomeUsuario}");
                     return usuario;
                 }
             }
@@ -43,7 +42,7 @@ namespace FocoTotal.Services
         public void CadastroUsuario()
         {
             Menu.Linha("Cadastro");
-            Console.Write("Digite seu nome: ");
+            Console.Write("Digite seu nome de usuario(unico): ");
             var nomeUsuario = Console.ReadLine();
             Console.Write("Sua senha: ");
             var senhaUsuario = Console.ReadLine();
@@ -68,8 +67,8 @@ namespace FocoTotal.Services
             }
 
 
-            Thread.Sleep(0600);
-            Menu.MensagemPersonalizada($"Usuario {usuario.NomeUsuario} cadastrado com sucesso!");
+            Thread.Sleep(0400);
+            Menu.MensagemPersonalizadaGreen($"Usuario {usuario.NomeUsuario} cadastrado com sucesso!");
         }
 
         public void UploadContasDisc()

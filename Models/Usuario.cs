@@ -28,7 +28,8 @@ namespace FocoTotal.Models
             Console.Write("Descrição: ");
             var descricaotarefa = Console.ReadLine();
             DateTime datatarefa = DateTime.Now;
-            
+
+            Thread.Sleep(0100);
             Menu.MenuOpc("Urgente", "Media", "Normal", "Baixa");
             Console.Write("Qual nivel de prioridade da sua tarefa: ");
             int.TryParse(Console.ReadLine(), out int entrada);
@@ -51,26 +52,59 @@ namespace FocoTotal.Models
             }
             Tarefa tarefa = new Tarefa(titulotarefa, descricaotarefa, prioridadetarefa, datatarefa, idtarefa);
             tarefas.Add(tarefa);
-            Console.WriteLine($"O ID dessa tarefa: {idtarefa}");
+            Console.Write($"O ID dessa tarefa: ");
+            Menu.MensagemPersonalizadaBlue($"{idtarefa}");
             SalvarDadosArquivo();
-          
-            Menu.MensagemPersonalizada("Tarefa adicionada com sucesso!");
+
+            Thread.Sleep(0120);
+            Menu.MensagemPersonalizadaGreen("Tarefa adicionada com sucesso!");
         }
 
-        public void DeleteTarefa(int identrada)
+        public void DeleteTarefaId(int identrada)
         {
             var resultado = GetTarefa(identrada);
             tarefas.Remove(resultado);
             SalvarDadosArquivo();
 
-            Thread.Sleep(0500);
-            Menu.MensagemPersonalizada($"Tarefa id[{identrada}] excluida com sucesso!");
+            Thread.Sleep(0400);
+            Menu.MensagemPersonalizadaGreen($"Tarefa id[{identrada}] excluida com sucesso!");
+        }
+        public void DeleteAllTarefa()
+        {
+            foreach(var tarefa in tarefas)
+            {
+                tarefas.Remove(tarefa);
+            }
+            SalvarDadosArquivo();
+
+            Thread.Sleep(0400);
+            Menu.MensagemPersonalizadaGreen("Tarefas excluidas com sucesso!");
+        }
+        public void DeleteVariasTarefa(params int[] identrada)
+        {
+            foreach(var id in identrada)
+            {
+                var resultado = GetTarefa(id);
+                tarefas.Remove(resultado);
+            }
+            
+            SalvarDadosArquivo();
+
+            Thread.Sleep(0400);
+            Menu.MensagemPersonalizadaGreen("Tarefas excluida com sucesso!");
         }
         
         
         public void ExibirTarefas()
         {
+            if (!tarefas.Any()) 
+            { 
+                Menu.MensagemPersonalizadaRed("Você ainda não adicionou tarefas!");
+                return;
+            }
+            
             Menu.Linha("Tarefas");
+            Thread.Sleep(0300);
 
             foreach (var tarefa in tarefas)
             {
@@ -80,6 +114,7 @@ namespace FocoTotal.Models
                 Console.WriteLine($"Prioridade: {tarefa.TipoPrioridade}");
                 Console.WriteLine($"Data: {tarefa.DataTarefa}");
                 Menu.Linha("------");
+                Thread.Sleep(0150);
             }
 
             Menu.Linha("------");
@@ -100,6 +135,7 @@ namespace FocoTotal.Models
 
         public void TarefasPersonalizadas()
         {
+            Thread.Sleep(0300);
             Menu.MenuOpc("tarefas urgentes", "Tarefas medias", "Tarefas normais", "Tarefas baixas", "Exibir tarefa por ID");
             Console.Write("Opção: ");
             int.TryParse(Console.ReadLine(), out int entrada);
@@ -110,16 +146,21 @@ namespace FocoTotal.Models
                 {
                         var resultado = tarefas.Where(tarefa => tarefa.TipoPrioridade == EnumPrioridade.Urgente);
 
+                        if (resultado == null)
+                        {
+                            Menu.MensagemPersonalizadaRed("Você ainda não adicionou tarefas dessa prioridade!");
+                        }
+
                         Menu.Linha("Tarefas urgentes");
+                        Thread.Sleep(0150);
                         foreach (var tarefa in resultado)
                         {
-                            Console.BackgroundColor = ConsoleColor.Red;
-                            Console.ForegroundColor = ConsoleColor.Black;
+                            Console.ForegroundColor = ConsoleColor.Red;
                             Menu.Linha($"{tarefa.TituloTarefa}");
-                            Console.Write($"Titulo: {tarefa.TituloTarefa}");
-                            Console.Write($"Descrição: {tarefa.DescricaoTarefa}");
-                            Console.Write($"Prioridade: {tarefa.TipoPrioridade}");
-                            Console.Write($"Data: {tarefa.DataTarefa}");
+                            Console.WriteLine($"Titulo: {tarefa.TituloTarefa}");
+                            Console.WriteLine($"Descrição: {tarefa.DescricaoTarefa}");
+                            Console.WriteLine($"Prioridade: {tarefa.TipoPrioridade}");
+                            Console.WriteLine($"Data: {tarefa.DataTarefa}");
                             Menu.Linha("------");
                             Console.ResetColor();
                             Console.WriteLine();
@@ -130,7 +171,13 @@ namespace FocoTotal.Models
                 {
                         var resultado = tarefas.Where(tarefa => tarefa.TipoPrioridade == EnumPrioridade.Media);
 
+                        if (resultado == null)
+                        {
+                            Menu.MensagemPersonalizadaRed("Você ainda não adicionou tarefas dessa prioridade!");
+                        }
+
                         Menu.Linha("Tarefas medianas");
+                        Thread.Sleep(0150);
                         foreach (var tarefa in resultado)
                         {
                             Menu.Linha($"{tarefa.TituloTarefa}");
@@ -146,7 +193,13 @@ namespace FocoTotal.Models
                 {
                         var resultado = tarefas.Where(tarefa => tarefa.TipoPrioridade == EnumPrioridade.Normal);
 
+                        if (resultado == null)
+                        {
+                            Menu.MensagemPersonalizadaRed("Você ainda não adicionou tarefas dessa prioridade!");
+                        }
+
                         Menu.Linha("Tarefas normais");
+                        Thread.Sleep(0150);
                         foreach (var tarefa in resultado)
                         {
                             Menu.Linha($"{tarefa.TituloTarefa}");
@@ -162,7 +215,14 @@ namespace FocoTotal.Models
                 {
                         var resultado = tarefas.Where(tarefa => tarefa.TipoPrioridade == EnumPrioridade.Baixa);
 
+
+                        if (resultado == null)
+                        {
+                            Menu.MensagemPersonalizadaRed("Você ainda não adicionou tarefas dessa prioridade!");
+                        }
+
                         Menu.Linha("Tarefas baixas");
+                        Thread.Sleep(0150);
                         foreach (var tarefa in resultado)
                         {
                             Menu.Linha($"{tarefa.TituloTarefa}");
@@ -182,10 +242,11 @@ namespace FocoTotal.Models
 
                         if (tarefaachada == null)
                         {
-                            Console.WriteLine("Tarefa inexistente!");
+                            Menu.MensagemPersonalizadaRed("Tarefa inexistente!");
                             break;
                         }
 
+                        Thread.Sleep(0150);
                         Menu.Linha($"Tarefa {tarefaachada.TituloTarefa}");
                         Console.WriteLine($"Titulo: {tarefaachada.TituloTarefa}");
                         Console.WriteLine($"Descrição: {tarefaachada.DescricaoTarefa}");
