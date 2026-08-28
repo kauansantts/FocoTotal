@@ -75,15 +75,52 @@ namespace FocoTotal.Services
                     {
                         try
                         {
-                            int[] ids;
-                            Console.Write("Quais IDs das tarefas que quer remover: ");
-                            int.TryParse(Console.ReadLine(), out int idsentrada);
-                        }catch(Exception ex)
+                            bool idsvalidos = true;
+                            List<int> ids = new List<int>();
+                            Console.WriteLine("Quais IDs das tarefas que quer remover");
+                            Console.WriteLine("obs:Numero 'espaco' outro numero");
+                            Console.Write("Digite: ");
+                            var idsEntrada = Console.ReadLine();
+                            var splitado = idsEntrada.Split(' ');
+
+                            foreach(var split in splitado)
+                            {
+                                 var resultadoatual = int.TryParse(split, out int numero);
+                                if(resultadoatual == false)
+                                {
+                                    idsvalidos = resultadoatual;
+                                }
+        
+                                if(idsvalidos == true)
+                                {
+                                    ids.Add(numero);
+                                }
+                            }
+                            if (idsvalidos == false)
+                            {
+                                Console.WriteLine("Valor invalido!");
+                                continue;
+                            }
+
+                            usuario.DeleteVariasTarefa(ids.ToArray());
+                        }
+                        catch(Exception ex)
                         {
                             Menu.MensagemPersonalizadaRed(ex.Message);
                         }
+                    }else if (resposta == 3)
+                    {
+                        Console.Write("Você deseja realmente apagar todas tarefas[S/N]: ");
+                        var requestUser = Console.ReadLine();
+                        if (requestUser == "S" || requestUser == "s")
+                        {
+                            usuario.DeleteAllTarefa();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Você não apagou nenhuma tarefa!");
+                        }
                     }
-
                 }
                 else if (entrada == 4)
                 {
