@@ -21,7 +21,7 @@ namespace FocoTotal.Services
         public Usuario Login(string username, string password)
         {
             var usuario = BuscarUser(username, password);
-            Thread.Sleep(0200);
+            Thread.Sleep(0800);
             Menu.MensagemPersonalizadaGreen($"Bem vindo {usuario.NomeUsuario}");
             return usuario;
         }

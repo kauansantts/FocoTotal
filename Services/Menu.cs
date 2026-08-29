@@ -1,4 +1,5 @@
 ﻿using FocoTotal.Models;
+using Spectre.Console;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,18 +9,18 @@ namespace FocoTotal.Services
     public class Menu
     {
         
-        public static void MenuOpc(params string[] opc)
-        {
-            Linha("Foco Total");
-            var i = 1;
-            foreach (var item in opc)
-            {
-                Console.WriteLine($"{i} - {item}");
-                i++;
-            }
+        //public static void MenuOpc(params string[] opc)
+        //{
+        //    Linha("Foco Total");
+        //    var i = 1;
+        //    foreach (var item in opc)
+        //    {
+        //        Console.WriteLine($"{i} - {item}");
+        //        i++;
+        //    }
 
-            Menu.Linha("------");
-        }
+        //    Menu.Linha("------");
+        //}
 
 
         public static void Linha(string mensagem)
@@ -37,15 +38,28 @@ namespace FocoTotal.Services
         {
             while (true)
             {
-                Menu.MenuOpc("Adicionar tarefa", "Remover tarefa", "Exibir tarefas", "Exibir tarefas personalizadas", "Sair do sistema");
+                var painel = new Panel("[bold yellow]1[/] - Adicionar tarefa\n[bold yellow]2[/] - Remover tarefa\n[bold yellow]3[/] - Exibir tarefas\n[bold yellow]4[/] - Exibir tarefas personalizadas\n[bold yellow]5[/] - Sair do sistema")
+                {
+                    Header = new PanelHeader("[bold cyan] FOCO TOTAL [/]"),
+                    Border = BoxBorder.Rounded,
+                    Padding = new Padding(2, 1, 2, 1)
+                };
+                AnsiConsole.Write(painel);
                 Console.Write("Opção: ");
                 int.TryParse(Console.ReadLine(), out int entrada);
 
                 if(entrada == 5)
-                { 
-                    Menu.Linha("Saindo do sistema");
-                    Thread.Sleep(0600);
-                    break;
+                {
+                    Menu.MensagemPersonalizadaRed("Você quer mesmo sair do sistema? ");
+                    Console.Write("[S/N]: ");
+                    var validarSaida = Console.ReadLine();
+                    if(validarSaida == "S" || validarSaida == "s")
+                    {
+                        Menu.Linha("Saindo do sistema");
+                        Thread.Sleep(0600);
+                        Console.Clear();
+                        break;
+                    }                 
                 }else if (entrada == 1)
                 {
                     usuario.AddTarefa();
@@ -54,7 +68,13 @@ namespace FocoTotal.Services
                     usuario.ExibirTarefas();
                 }else if (entrada == 2)
                 {
-                    Menu.MenuOpc("Remover tarefa por ID", "Remover varias tarefas por ID", "Remover todas tarefas");
+                    var painel2 = new Panel("[bold yellow]1[/] - Remover tarefa por ID\n[bold yellow]2[/] - Remover varias tarefas por ID\n[bold yellow]3[/] - Remover todas tarefas")
+                    {
+                        Header = new PanelHeader("[bold cyan] FOCO TOTAL [/]"),
+                        Border = BoxBorder.Rounded,
+                        Padding = new Padding(2, 1, 2, 1)
+                    };
+                    AnsiConsole.Write(painel2);
                     Console.Write("Opção: ");
                     int.TryParse(Console.ReadLine(), out int resposta);
 

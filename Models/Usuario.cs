@@ -1,11 +1,12 @@
 ﻿using FocoTotal.Enums;
+using FocoTotal.Enums;
+using FocoTotal.Exceptions;
+using FocoTotal.Services;
+using Spectre.Console;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using FocoTotal.Services;
-using FocoTotal.Exceptions;
-using FocoTotal.Enums;
 using System.Linq;
+using System.Text;
 
 namespace FocoTotal.Models
 {
@@ -30,7 +31,13 @@ namespace FocoTotal.Models
             DateTime datatarefa = DateTime.Now;
 
             Thread.Sleep(0100);
-            Menu.MenuOpc("Urgente", "Media", "Normal", "Baixa");
+            var painel = new Panel("[bold yellow]1[/] - Urgente\n[bold yellow]2[/] - Media\n[bold yellow]3[/] - Normal\n[bold yellow]3[/] - Baixa")
+            {
+                Header = new PanelHeader("[bold cyan] FOCO TOTAL [/]"),
+                Border = BoxBorder.Rounded,
+                Padding = new Padding(2, 1, 2, 1)
+            };
+            AnsiConsole.Write(painel);
             Console.Write("Qual nivel de prioridade da sua tarefa: ");
             int.TryParse(Console.ReadLine(), out int entrada);
 
@@ -71,10 +78,7 @@ namespace FocoTotal.Models
         }
         public void DeleteAllTarefa()
         {
-            foreach(var tarefa in tarefas)
-            {
-                tarefas.Remove(tarefa);
-            }
+            tarefas.Clear();
             SalvarDadosArquivo();
 
             Thread.Sleep(0400);
@@ -104,20 +108,19 @@ namespace FocoTotal.Models
             }
             
             Menu.Linha("Tarefas");
-            Thread.Sleep(0300);
+            Thread.Sleep(300);
 
             foreach (var tarefa in tarefas)
             {
-                Console.WriteLine($"ID: [{tarefa.IdTarefa}]");
-                Console.WriteLine($"Titulo: {tarefa.TituloTarefa}");
-                Console.WriteLine($"Descrição: {tarefa.DescricaoTarefa}");
-                Console.WriteLine($"Prioridade: {tarefa.TipoPrioridade}");
-                Console.WriteLine($"Data: {tarefa.DataTarefa}");
-                Menu.Linha("------");
-                Thread.Sleep(0150);
+                var painel = new Panel($" - ID: {tarefa.IdTarefa}\n - Titulo: {tarefa.TituloTarefa}\n - Descrição: {tarefa.DescricaoTarefa}\n - Prioridade: {tarefa.TipoPrioridade}\n - Data: {tarefa.DataTarefa}")
+                {
+                    Header = new PanelHeader($"[bold cyan] {tarefa.TituloTarefa} [/]"),
+                    Border = BoxBorder.Rounded,
+                    Padding = new Padding(2, 1, 2, 1)
+                };
+                AnsiConsole.Write(painel);
+                Thread.Sleep(380);
             }
-
-            Menu.Linha("------");
         }
 
 
@@ -136,7 +139,13 @@ namespace FocoTotal.Models
         public void TarefasPersonalizadas()
         {
             Thread.Sleep(0300);
-            Menu.MenuOpc("tarefas urgentes", "Tarefas medias", "Tarefas normais", "Tarefas baixas", "Exibir tarefa por ID");
+            var painel = new Panel("[bold yellow]1[/] - Tarefas urgentes\n[bold yellow]2[/] - Tarefas medias\n[bold yellow]3[/] - Tarefas normais\n[bold yellow]4[/] - Tarefas baixas\n[bold yellow]5[/] - Exibir tarefa por ID")
+            {
+                Header = new PanelHeader("[bold cyan] FOCO TOTAL [/]"),
+                Border = BoxBorder.Rounded,
+                Padding = new Padding(2, 1, 2, 1)
+            };
+            AnsiConsole.Write(painel);
             Console.Write("Opção: ");
             int.TryParse(Console.ReadLine(), out int entrada);
          
@@ -146,24 +155,23 @@ namespace FocoTotal.Models
                 {
                         var resultado = tarefas.Where(tarefa => tarefa.TipoPrioridade == EnumPrioridade.Urgente);
 
-                        if (resultado == null)
+                        if (resultado.Count() == 0)
                         {
                             Menu.MensagemPersonalizadaRed("Você ainda não adicionou tarefas dessa prioridade!");
                         }
 
                         Menu.Linha("Tarefas urgentes");
-                        Thread.Sleep(0150);
+                        Thread.Sleep(380);
                         foreach (var tarefa in resultado)
                         {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Menu.Linha($"{tarefa.TituloTarefa}");
-                            Console.WriteLine($"Titulo: {tarefa.TituloTarefa}");
-                            Console.WriteLine($"Descrição: {tarefa.DescricaoTarefa}");
-                            Console.WriteLine($"Prioridade: {tarefa.TipoPrioridade}");
-                            Console.WriteLine($"Data: {tarefa.DataTarefa}");
-                            Menu.Linha("------");
-                            Console.ResetColor();
-                            Console.WriteLine();
+                            var painel2 = new Panel($"[bold red] - ID: {tarefa.IdTarefa}\n - Titulo: {tarefa.TituloTarefa}\n - Descrição: {tarefa.DescricaoTarefa}\n - Prioridade: {tarefa.TipoPrioridade}\n - Data: {tarefa.DataTarefa}[/]")
+                            {
+                                Header = new PanelHeader($"[bold cyan] {tarefa.TituloTarefa} [/]"),
+                                Border = BoxBorder.Rounded,
+                                Padding = new Padding(2, 1, 2, 1)
+                            };
+                            AnsiConsole.Write(painel2);
+                            Thread.Sleep(380);
                         }
                         break;
                 }
@@ -171,7 +179,7 @@ namespace FocoTotal.Models
                 {
                         var resultado = tarefas.Where(tarefa => tarefa.TipoPrioridade == EnumPrioridade.Media);
 
-                        if (resultado == null)
+                        if (resultado.Count() == 0)
                         {
                             Menu.MensagemPersonalizadaRed("Você ainda não adicionou tarefas dessa prioridade!");
                         }
@@ -180,12 +188,14 @@ namespace FocoTotal.Models
                         Thread.Sleep(0150);
                         foreach (var tarefa in resultado)
                         {
-                            Menu.Linha($"{tarefa.TituloTarefa}");
-                            Console.WriteLine($"Titulo: {tarefa.TituloTarefa}");
-                            Console.WriteLine($"Descrição: {tarefa.DescricaoTarefa}");
-                            Console.WriteLine($"Prioridade: {tarefa.TipoPrioridade}");
-                            Console.WriteLine($"Data: {tarefa.DataTarefa}");
-                            Menu.Linha("------");
+                            var painel2 = new Panel($" - ID: {tarefa.IdTarefa}\n - Titulo: {tarefa.TituloTarefa}\n - Descrição: {tarefa.DescricaoTarefa}\n - Prioridade: {tarefa.TipoPrioridade}\n - Data: {tarefa.DataTarefa}")
+                            {
+                                Header = new PanelHeader($"[bold cyan] {tarefa.TituloTarefa} [/]"),
+                                Border = BoxBorder.Rounded,
+                                Padding = new Padding(2, 1, 2, 1)
+                            };
+                            AnsiConsole.Write(painel2);
+                            Thread.Sleep(380);
                         }
                         break;
                 }
@@ -193,7 +203,8 @@ namespace FocoTotal.Models
                 {
                         var resultado = tarefas.Where(tarefa => tarefa.TipoPrioridade == EnumPrioridade.Normal);
 
-                        if (resultado == null)
+
+                        if (resultado.Count() == 0)
                         {
                             Menu.MensagemPersonalizadaRed("Você ainda não adicionou tarefas dessa prioridade!");
                         }
@@ -202,12 +213,14 @@ namespace FocoTotal.Models
                         Thread.Sleep(0150);
                         foreach (var tarefa in resultado)
                         {
-                            Menu.Linha($"{tarefa.TituloTarefa}");
-                            Console.WriteLine($"Titulo: {tarefa.TituloTarefa}");
-                            Console.WriteLine($"Descrição: {tarefa.DescricaoTarefa}");
-                            Console.WriteLine($"Prioridade: {tarefa.TipoPrioridade}");
-                            Console.WriteLine($"Data: {tarefa.DataTarefa}");
-                            Menu.Linha("------");
+                            var painel2 = new Panel($" - ID: {tarefa.IdTarefa}\n - Titulo: {tarefa.TituloTarefa}\n - Descrição: {tarefa.DescricaoTarefa}\n - Prioridade: {tarefa.TipoPrioridade}\n - Data: {tarefa.DataTarefa}")
+                            {
+                                Header = new PanelHeader($"[bold cyan] {tarefa.TituloTarefa} [/]"),
+                                Border = BoxBorder.Rounded,
+                                Padding = new Padding(2, 1, 2, 1)
+                            };
+                            AnsiConsole.Write(painel2);
+                            Thread.Sleep(380);
                         }
                         break;
                 }
@@ -216,7 +229,8 @@ namespace FocoTotal.Models
                         var resultado = tarefas.Where(tarefa => tarefa.TipoPrioridade == EnumPrioridade.Baixa);
 
 
-                        if (resultado == null)
+
+                        if (resultado.Count() == 0)
                         {
                             Menu.MensagemPersonalizadaRed("Você ainda não adicionou tarefas dessa prioridade!");
                         }
@@ -225,12 +239,14 @@ namespace FocoTotal.Models
                         Thread.Sleep(0150);
                         foreach (var tarefa in resultado)
                         {
-                            Menu.Linha($"{tarefa.TituloTarefa}");
-                            Console.WriteLine($"Titulo: {tarefa.TituloTarefa}");
-                            Console.WriteLine($"Descrição: {tarefa.DescricaoTarefa}");
-                            Console.WriteLine($"Prioridade: {tarefa.TipoPrioridade}");
-                            Console.WriteLine($"Data: {tarefa.DataTarefa}");
-                            Menu.Linha("------");
+                            var painel2 = new Panel($" - ID: {tarefa.IdTarefa}\n - Titulo: {tarefa.TituloTarefa}\n - Descrição: {tarefa.DescricaoTarefa}\n - Prioridade: {tarefa.TipoPrioridade}\n - Data: {tarefa.DataTarefa}")
+                            {
+                                Header = new PanelHeader($"[bold cyan] {tarefa.TituloTarefa} [/]"),
+                                Border = BoxBorder.Rounded,
+                                Padding = new Padding(2, 1, 2, 1)
+                            };
+                            AnsiConsole.Write(painel2);
+                            Thread.Sleep(380);
                         }
                         break;
                 }
@@ -247,12 +263,14 @@ namespace FocoTotal.Models
                         }
 
                         Thread.Sleep(0150);
-                        Menu.Linha($"Tarefa {tarefaachada.TituloTarefa}");
-                        Console.WriteLine($"Titulo: {tarefaachada.TituloTarefa}");
-                        Console.WriteLine($"Descrição: {tarefaachada.DescricaoTarefa}");
-                        Console.WriteLine($"Prioridade: {tarefaachada.TipoPrioridade}");
-                        Console.WriteLine($"Data: {tarefaachada.DataTarefa}");
-                        Menu.Linha("------");
+                        var painel2 = new Panel($" - ID: {tarefaachada.IdTarefa}\n - Titulo: {tarefaachada.TituloTarefa}\n - Descrição: {tarefaachada.DescricaoTarefa}\n - Prioridade: {tarefaachada.TipoPrioridade}\n - Data: {tarefaachada.DataTarefa}")
+                        {
+                            Header = new PanelHeader($"[bold cyan] {tarefaachada.TituloTarefa} [/]"),
+                            Border = BoxBorder.Rounded,
+                            Padding = new Padding(2, 1, 2, 1)
+                        };
+                        AnsiConsole.Write(painel2);
+                        Thread.Sleep(380);
                         break;
                 }
             }

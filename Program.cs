@@ -5,9 +5,8 @@ using FocoTotal.Enums;
 using FocoTotal.Models;
 using FocoTotal.Services;
 using System.Threading;
+using Spectre.Console;
 
-
-//faltando apenas add persistencia de dados
 
 namespace FocoTotal
 {
@@ -18,8 +17,14 @@ namespace FocoTotal
         {
             Sistema sistema = new Sistema();
             while (true)
-            {
-                Menu.MenuOpc("Login", "Cadastrar conta", "Encerrar");
+            {              
+                var painel = new Panel("[bold yellow]1[/] - Login\n[bold yellow]2[/] - Cadastrar conta\n[bold yellow]3[/] - Encerrar")
+                {
+                    Header = new PanelHeader("[bold cyan] FOCO TOTAL [/]"),
+                    Border = BoxBorder.Rounded,
+                    Padding = new Padding(2, 1, 2, 1)
+                };
+                AnsiConsole.Write(painel);
                 Console.Write("Opção: ");
                 int.TryParse(Console.ReadLine(), out int entrada);
 
@@ -33,6 +38,8 @@ namespace FocoTotal
                         var senha = Console.ReadLine();
                         Thread.Sleep(0100);
                         var logou = sistema.Login(nome, senha);
+                        Thread.Sleep(0800);
+                        Console.Clear();
                         Menu.MenuLogado(logou);
                     }catch(Exception ex)
                     {
