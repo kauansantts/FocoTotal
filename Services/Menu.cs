@@ -1,4 +1,5 @@
-﻿using FocoTotal.Models;
+﻿using Figgle.Fonts;
+using FocoTotal.Models;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
@@ -36,8 +37,16 @@ namespace FocoTotal.Services
 
         public static void MenuLogado(Usuario usuario)
         {
+
             while (true)
             {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Cyan;
+
+                string titulo = FiggleFonts.Standard.Render("Foco Total");
+                Console.WriteLine(titulo);
+
+                Console.ResetColor();
                 var painel = new Panel("[bold yellow]1[/] - Adicionar tarefa\n[bold yellow]2[/] - Remover tarefa\n[bold yellow]3[/] - Exibir tarefas\n[bold yellow]4[/] - Exibir tarefas personalizadas\n[bold yellow]5[/] - Sair do sistema")
                 {
                     Header = new PanelHeader("[bold cyan] FOCO TOTAL [/]"),

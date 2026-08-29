@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Figgle;
+using Figgle.Fonts;
 using FocoTotal.Enums;
 using FocoTotal.Models;
 using FocoTotal.Services;
-using System.Threading;
 using Spectre.Console;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading;
 
 
 namespace FocoTotal
@@ -17,7 +19,14 @@ namespace FocoTotal
         {
             Sistema sistema = new Sistema();
             while (true)
-            {              
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Cyan;
+
+                string titulo = FiggleFonts.Standard.Render("Foco Total");
+                Console.WriteLine(titulo);
+
+                Console.ResetColor();
                 var painel = new Panel("[bold yellow]1[/] - Login\n[bold yellow]2[/] - Cadastrar conta\n[bold yellow]3[/] - Encerrar")
                 {
                     Header = new PanelHeader("[bold cyan] FOCO TOTAL [/]"),
@@ -25,9 +34,9 @@ namespace FocoTotal
                     Padding = new Padding(2, 1, 2, 1)
                 };
                 AnsiConsole.Write(painel);
+
                 Console.Write("Opção: ");
                 int.TryParse(Console.ReadLine(), out int entrada);
-
                 if (entrada == 1)
                 {
                     try
