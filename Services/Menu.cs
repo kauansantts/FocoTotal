@@ -40,7 +40,7 @@ namespace FocoTotal.Services
 
             while (true)
             {
-                Console.Clear();
+               
                 Console.ForegroundColor = ConsoleColor.Cyan;
 
                 string titulo = FiggleFonts.Standard.Render("Foco Total");

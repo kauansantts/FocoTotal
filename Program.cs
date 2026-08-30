@@ -31,7 +31,7 @@ namespace FocoTotal
                 {
                     Header = new PanelHeader("[bold cyan] FOCO TOTAL [/]"),
                     Border = BoxBorder.Rounded,
-                    Padding = new Padding(2, 1, 2, 1)
+                    Padding = new Padding(2, 1, 2, 1) 
                 };
                 AnsiConsole.Write(painel);
 
