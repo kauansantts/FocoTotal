@@ -43,7 +43,7 @@ FocoTotal/
 └── Program.cs
 
 ## Demonstração
-![Foco Total funcionando](projeto1.png)
+![Foco Total funcionando](projeto1.jpeg)
 
 🧠 Conceitos aplicados
 
