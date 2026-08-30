@@ -42,6 +42,9 @@ FocoTotal/
 │   
 └── Program.cs
 
+## Demonstração
+![Foco Total funcionando](projeto1.png)
+
 🧠 Conceitos aplicados
 
 Programação Orientada a Objetos, 
